@@ -7,6 +7,21 @@ import Notiflix from 'notiflix';
 import styles from './App.module.css'
 
 class App extends Component {
+  componentDidMount() {
+    // Încarca contactele din localStorage la încărcarea componentei
+    const savedContacts = localStorage.getItem('contacts');
+    if (savedContacts) {
+      this.setState({ contacts: JSON.parse(savedContacts) });
+    }
+  }
+
+  componentDidUpdate(_prevProps, prevState) {
+    // Salveaza contactele în localStorage dacă starea s-a schimbat
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
